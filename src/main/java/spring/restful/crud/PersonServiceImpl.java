@@ -2,6 +2,7 @@ package spring.restful.crud;
 
 import org.modelmapper.ModelMapper;
 
+import javax.transaction.Transactional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public PersonViewModel createPerson(PersonRequestModel personRequestModel) {
-        return null;
+        PersonEntity entity = this.modelMapper.map(personRequestModel, PersonEntity.class);
+        PersonEntity savedEntity = this.personRepository.saveAndFlush(entity);
+        return this.modelMapper.map(savedEntity,PersonViewModel.class);
     }
 
     @Override
