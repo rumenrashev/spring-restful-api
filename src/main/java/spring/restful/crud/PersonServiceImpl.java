@@ -41,12 +41,22 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonViewModel putPerson(PersonRequestModel personRequestModel) {
-        return null;
+    public PersonViewModel putPerson(Long id,PersonRequestModel personRequestModel) {
+        existById(id);
+        PersonEntity entity = this.modelMapper.map(personRequestModel, PersonEntity.class);
+        entity.setId(id);
+        PersonEntity savedEntity = this.personRepository.saveAndFlush(entity);
+        return this.modelMapper.map(savedEntity,PersonViewModel.class);
     }
 
     @Override
     public PersonViewModel deletePerson(Long id) {
         return null;
+    }
+
+    private void existById(Long id){
+        if(!this.personRepository.existsById(id)){
+            throw new PersonNotFoundException(id);
+        }
     }
 }

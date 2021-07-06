@@ -10,7 +10,7 @@ public interface PersonService {
 
     PersonViewModel createPerson(PersonRequestModel personRequestModel);
 
-    PersonViewModel putPerson(PersonRequestModel personRequestModel);
+    PersonViewModel putPerson(Long id,PersonRequestModel personRequestModel);
 
     PersonViewModel deletePerson(Long id);
 
