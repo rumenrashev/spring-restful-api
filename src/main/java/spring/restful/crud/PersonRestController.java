@@ -45,4 +45,11 @@ public class PersonRestController {
                 .ok()
                 .body(deletedPerson);
     }
+
+    @ExceptionHandler(PersonNotFoundException.class)
+    public ResponseEntity<String> handlePersonNotFoundException(RuntimeException exception){
+        return ResponseEntity
+                .badRequest()
+                .body(exception.getMessage());
+    }
 }
