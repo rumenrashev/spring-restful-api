@@ -23,9 +23,26 @@ public class PersonRestController {
                 .body(allPeople);
     }
 
-    @PostMapping ResponseEntity<PersonViewModel> createPerson(@RequestBody PersonRequestModel personRequestModel){
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonViewModel> getPersonById(@PathVariable Long id){
+        PersonViewModel personById = this.personService.getPersonById(id);
+        return ResponseEntity
+                .ok()
+                .body(personById);
+    }
+
+    @PostMapping
+    public ResponseEntity<PersonViewModel> createPerson(@RequestBody PersonRequestModel personRequestModel){
         PersonViewModel createdPerson = this.personService.createPerson(personRequestModel);
         return ResponseEntity.ok()
                 .body(createdPerson);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PersonViewModel> deletePerson(@PathVariable Long id){
+        PersonViewModel deletedPerson = this.personService.deletePerson(id);
+        return ResponseEntity
+                .ok()
+                .body(deletedPerson);
     }
 }
