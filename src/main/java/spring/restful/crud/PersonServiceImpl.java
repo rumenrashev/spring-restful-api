@@ -26,7 +26,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonViewModel getPersonById(Long id) {
-        return null;
+        return this.personRepository.findById(id)
+                .map(e-> this.modelMapper.map(e,PersonViewModel.class))
+                .orElseThrow(()-> new PersonNotFoundException(id));
     }
 
     @Override
