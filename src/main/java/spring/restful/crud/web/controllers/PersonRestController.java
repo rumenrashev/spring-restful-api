@@ -50,6 +50,16 @@ public class PersonRestController {
                 .body(deletedPerson);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonViewModel> putPerson(@PathVariable Long id,
+                                                     @RequestBody PersonRequestModel personRequestModel){
+        PersonViewModel personViewModel = this.personService.putPerson(id, personRequestModel);
+        return ResponseEntity
+                .ok()
+                .body(personViewModel);
+
+    }
+
     @ExceptionHandler(PersonNotFoundException.class)
     public ResponseEntity<String> handlePersonNotFoundException(RuntimeException exception){
         return ResponseEntity
