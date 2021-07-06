@@ -1,11 +1,13 @@
 package spring.restful.crud;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
@@ -51,7 +53,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonViewModel deletePerson(Long id) {
-        return null;
+        PersonViewModel entity = this.personRepository.findById(id)
+                .map(e -> this.modelMapper.map(e, PersonViewModel.class))
+                .orElseThrow(() -> new PersonNotFoundException(id));
+        this.personRepository.deleteById(id);
+        return this.modelMapper.map(entity,PersonViewModel.class);
     }
 
     private void existById(Long id){
