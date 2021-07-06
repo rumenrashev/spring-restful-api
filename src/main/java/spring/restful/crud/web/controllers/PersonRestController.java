@@ -1,7 +1,11 @@
-package spring.restful.crud;
+package spring.restful.crud.web.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.restful.crud.exceptions.PersonNotFoundException;
+import spring.restful.crud.service.PersonService;
+import spring.restful.crud.web.models.PersonRequestModel;
+import spring.restful.crud.web.models.PersonViewModel;
 
 import java.util.Set;
 

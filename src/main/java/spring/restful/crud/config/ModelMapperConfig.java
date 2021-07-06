@@ -1,4 +1,4 @@
-package spring.restful.crud;
+package spring.restful.crud.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

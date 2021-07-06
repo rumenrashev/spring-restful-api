@@ -1,7 +1,12 @@
-package spring.restful.crud;
+package spring.restful.crud.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import spring.restful.crud.exceptions.PersonNotFoundException;
+import spring.restful.crud.web.models.PersonRequestModel;
+import spring.restful.crud.web.models.PersonViewModel;
+import spring.restful.crud.data.PersonEntity;
+import spring.restful.crud.data.PersonRepository;
 
 import javax.transaction.Transactional;
 import java.util.Set;

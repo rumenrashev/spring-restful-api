@@ -1,22 +1,34 @@
-package spring.restful.crud;
+package spring.restful.crud.data;
 
+import javax.persistence.*;
 import java.util.Objects;
 
-public class PersonViewModel {
+@Entity
+@Table(name = "people")
+public class PersonEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false,updatable = false)
     private Long id;
+
+    @Column(nullable = false,length = 20)
     private String firstName;
+
+    @Column(nullable = false,length = 20)
     private String lastName;
+
+    @Column(nullable = false)
     private byte age;
 
-    public PersonViewModel() {
+    public PersonEntity() {
     }
 
     public Long getId() {
         return id;
     }
 
-    public PersonViewModel setId(Long id) {
+    public PersonEntity setId(Long id) {
         this.id = id;
         return this;
     }
@@ -25,7 +37,7 @@ public class PersonViewModel {
         return firstName;
     }
 
-    public PersonViewModel setFirstName(String firstName) {
+    public PersonEntity setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -34,7 +46,7 @@ public class PersonViewModel {
         return lastName;
     }
 
-    public PersonViewModel setLastName(String lastName) {
+    public PersonEntity setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -43,7 +55,7 @@ public class PersonViewModel {
         return age;
     }
 
-    public PersonViewModel setAge(byte age) {
+    public PersonEntity setAge(byte age) {
         this.age = age;
         return this;
     }
@@ -52,7 +64,7 @@ public class PersonViewModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PersonViewModel that = (PersonViewModel) o;
+        PersonEntity that = (PersonEntity) o;
         return age == that.age &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(firstName, that.firstName) &&
@@ -61,12 +73,12 @@ public class PersonViewModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("PersonViewModel{");
+        final StringBuilder sb = new StringBuilder("PersonEntity{");
         sb.append("id=").append(id);
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');

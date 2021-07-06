@@ -1,4 +1,4 @@
-package spring.restful.crud;
+package spring.restful.crud.web.models;
 
 import java.util.Objects;
 

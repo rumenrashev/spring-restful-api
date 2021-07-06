@@ -1,4 +1,4 @@
-package spring.restful.crud;
+package spring.restful.crud.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,4 +1,7 @@
-package spring.restful.crud;
+package spring.restful.crud.service;
+
+import spring.restful.crud.web.models.PersonRequestModel;
+import spring.restful.crud.web.models.PersonViewModel;
 
 import java.util.Set;
 
