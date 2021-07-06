@@ -1,12 +1,27 @@
 package spring.restful.crud;
 
+import org.modelmapper.ModelMapper;
+
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PersonServiceImpl implements PersonService {
 
+    private final PersonRepository personRepository;
+    private final ModelMapper modelMapper;
+
+    public PersonServiceImpl(PersonRepository personRepository,
+                             ModelMapper modelMapper) {
+        this.personRepository = personRepository;
+        this.modelMapper = modelMapper;
+    }
+
     @Override
     public Set<PersonViewModel> getAllPeople() {
-        return null;
+        return this.personRepository.findAll()
+                .stream()
+                .map(e-> this.modelMapper.map(e,PersonViewModel.class))
+                .collect(Collectors.toSet());
     }
 
     @Override
