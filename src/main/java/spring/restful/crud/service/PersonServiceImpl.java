@@ -2,6 +2,7 @@ package spring.restful.crud.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import spring.restful.crud.exceptions.FiledDoesNotException;
 import spring.restful.crud.exceptions.PersonNotFoundException;
 import spring.restful.crud.web.models.PersonRequestModel;
 import spring.restful.crud.web.models.PersonViewModel;
@@ -9,6 +10,8 @@ import spring.restful.crud.data.PersonEntity;
 import spring.restful.crud.data.PersonRepository;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,11 +61,33 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonViewModel deletePerson(Long id) {
-        PersonViewModel entity = this.personRepository.findById(id)
-                .map(e -> this.modelMapper.map(e, PersonViewModel.class))
-                .orElseThrow(() -> new PersonNotFoundException(id));
+        PersonViewModel entity = this.getPersonById(id);
         this.personRepository.deleteById(id);
         return this.modelMapper.map(entity,PersonViewModel.class);
+    }
+
+    @Override
+    public PersonViewModel patchPerson(Long id, Map<String, String> fields) {
+       PersonEntity personEntity = this.personRepository.findById(id)
+               .orElseThrow(()-> new PersonNotFoundException(id));
+        fields
+                .forEach((fieldName, fieldValue) -> {
+                    switch (fieldName) {
+                        case "firstName":
+                            personEntity.setFirstName(fieldValue);
+                            break;
+                        case "lastName":
+                            personEntity.setLastName(fieldValue);
+                            break;
+                        case "age":
+                            personEntity.setAge(Byte.parseByte(fieldValue));
+                            break;
+                        default:
+                            throw new FiledDoesNotException(fieldName);
+                    }
+                });
+        PersonEntity savedEntity = this.personRepository.saveAndFlush(personEntity);
+        return this.modelMapper.map(savedEntity,PersonViewModel.class);
     }
 
     private void existById(Long id){

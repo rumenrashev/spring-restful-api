@@ -3,6 +3,7 @@ package spring.restful.crud.service;
 import spring.restful.crud.web.models.PersonRequestModel;
 import spring.restful.crud.web.models.PersonViewModel;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface PersonService {
@@ -16,5 +17,7 @@ public interface PersonService {
     PersonViewModel putPerson(Long id,PersonRequestModel personRequestModel);
 
     PersonViewModel deletePerson(Long id);
+
+    PersonViewModel patchPerson(Long id, Map<String,String> fields);
 
 }
