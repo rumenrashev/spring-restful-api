@@ -90,6 +90,16 @@ public class PersonServiceImpl implements PersonService {
         return this.modelMapper.map(savedEntity,PersonViewModel.class);
     }
 
+    @Override
+    public Set<PersonViewModel> deleteAllPeople() {
+        Set<PersonViewModel> allPeople = this.personRepository.findAll()
+                .stream()
+                .map(e -> this.modelMapper.map(e, PersonViewModel.class))
+                .collect(Collectors.toSet());
+        this.personRepository.deleteAll();
+        return allPeople;
+    }
+
     private void existById(Long id){
         if(!this.personRepository.existsById(id)){
             throw new PersonNotFoundException(id);

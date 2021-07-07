@@ -20,4 +20,5 @@ public interface PersonService {
 
     PersonViewModel patchPerson(Long id, Map<String,String> fields);
 
+    Set<PersonViewModel> deleteAllPeople();
 }

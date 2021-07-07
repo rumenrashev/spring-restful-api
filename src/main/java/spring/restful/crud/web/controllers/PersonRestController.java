@@ -7,14 +7,18 @@ import spring.restful.crud.exceptions.FiledDoesNotException;
 import spring.restful.crud.exceptions.PersonNotFoundException;
 import spring.restful.crud.service.PersonService;
 import spring.restful.crud.web.models.PersonRequestModel;
+import spring.restful.crud.web.models.MessageResponse;
 import spring.restful.crud.web.models.PersonViewModel;
+
+import static spring.restful.crud.constants.Messages.*;
+import static spring.restful.crud.constants.URLs.*;
 
 import java.util.Map;
 import java.util.Set;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/v1/people")
+@RequestMapping(PEOPLE_URL)
 public class PersonRestController {
 
     private final PersonService personService;
@@ -24,50 +28,71 @@ public class PersonRestController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<PersonViewModel>> getAllPeople() {
+    public ResponseEntity<MessageResponse> getAllPeople() {
         Set<PersonViewModel> allPeople = this.personService.getAllPeople();
+        MessageResponse messageResponse = new MessageResponse(GET_ALL_PEOPLE_MESSAGE, allPeople);
         return ResponseEntity
-                .ok(allPeople);
+                .ok()
+                .body(messageResponse);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PersonViewModel> getPersonById(@PathVariable Long id) {
+    @GetMapping(PERSON_ID)
+    public ResponseEntity<MessageResponse> getPersonById(@PathVariable Long id) {
         PersonViewModel personById = this.personService.getPersonById(id);
+        MessageResponse messageResponse = new MessageResponse(GET_PERSON_BY_ID_MESSAGE, personById);
         return ResponseEntity
-                .ok(personById);
+                .ok()
+                .body(messageResponse);
     }
 
     @PostMapping
-    public ResponseEntity<PersonViewModel> createPerson(@RequestBody PersonRequestModel personRequestModel) {
+    public ResponseEntity<MessageResponse> createPerson(@RequestBody PersonRequestModel personRequestModel) {
         PersonViewModel createdPerson = this.personService.createPerson(personRequestModel);
+        MessageResponse messageResponse = new MessageResponse(CREATE_PERSON_MESSAGE, createdPerson);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(createdPerson);
+                .body(messageResponse);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<PersonViewModel> deletePerson(@PathVariable Long id) {
+    @DeleteMapping(PERSON_ID)
+    public ResponseEntity<MessageResponse> deletePerson(@PathVariable Long id) {
         PersonViewModel deletedPerson = this.personService.deletePerson(id);
+        MessageResponse messageResponse = new MessageResponse(DELETE_PERSON_BY_ID_MESSAGE, deletedPerson);
         return ResponseEntity
-                .ok(deletedPerson);
+                .ok()
+                .body(messageResponse);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PersonViewModel> putPerson(@PathVariable Long id,
+    @PutMapping(PERSON_ID)
+    public ResponseEntity<MessageResponse> putPerson(@PathVariable Long id,
                                                      @RequestBody PersonRequestModel personRequestModel) {
-        PersonViewModel putPerson = this.personService.putPerson(id, personRequestModel);
+        PersonViewModel editedPerson = this.personService.putPerson(id, personRequestModel);
+        MessageResponse messageResponse = new MessageResponse(EDIT_PERSON_MESSAGE, editedPerson);
         return ResponseEntity
-                .ok(putPerson);
+                .ok()
+                .body(messageResponse);
 
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<PersonViewModel> patchPerson(@PathVariable Long id,
+    @DeleteMapping
+    public ResponseEntity<MessageResponse> deleteAllPeople(){
+        Set<PersonViewModel> deletedPeople = this.personService.deleteAllPeople();
+        MessageResponse messageResponse = new MessageResponse(DELETE_ALL_PEOPLE_MESSAGE, deletedPeople);
+        return ResponseEntity
+                .ok()
+                .body(messageResponse);
+    }
+
+    @PatchMapping(PERSON_ID)
+    public ResponseEntity<MessageResponse> patchPerson(@PathVariable Long id,
                                                        @RequestBody Map<String, String> fields) {
-        PersonViewModel patchedPerson = this.personService.patchPerson(id, fields);
+        PersonViewModel editedPerson = this.personService.patchPerson(id, fields);
+        MessageResponse messageResponse = new MessageResponse(EDIT_PERSON_MESSAGE, editedPerson);
         return ResponseEntity
-                .ok(patchedPerson);
+                .ok()
+                .body(messageResponse);
     }
+
 
     @ExceptionHandler({PersonNotFoundException.class,
             FiledDoesNotException.class})
