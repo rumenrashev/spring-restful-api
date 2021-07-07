@@ -10,7 +10,7 @@
 | PUT    | /people/{id} | [JSON](#put)  | Update all fields of a person  | 200           | [JSON](#post-response)         |
 | PATCH  | /people/{id} | [JSON](#patch)| Update some fields of a person | 200           | [JSON](#patch-response)        |
 | DELETE | /people/{id} |               | Delete person by id            | 200           | [JSON](#delete-by-id-response) |
-| DELETE | /people      |               | Delete all people              | 200           | [JSON]|
+| DELETE | /people      |               | Delete all people              | 200           | [JSON](#delete-all-response)   |
 
 ## Valid JSON Request Bodies examples
 
