@@ -1,5 +1,6 @@
 package spring.restful.crud.web.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.restful.crud.exceptions.FiledDoesNotException;
@@ -23,28 +24,29 @@ public class PersonRestController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<PersonViewModel>> getAllPeople(){
+    public ResponseEntity<Set<PersonViewModel>> getAllPeople() {
         Set<PersonViewModel> allPeople = this.personService.getAllPeople();
         return ResponseEntity
                 .ok(allPeople);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonViewModel> getPersonById(@PathVariable Long id){
+    public ResponseEntity<PersonViewModel> getPersonById(@PathVariable Long id) {
         PersonViewModel personById = this.personService.getPersonById(id);
         return ResponseEntity
                 .ok(personById);
     }
 
     @PostMapping
-    public ResponseEntity<PersonViewModel> createPerson(@RequestBody PersonRequestModel personRequestModel){
+    public ResponseEntity<PersonViewModel> createPerson(@RequestBody PersonRequestModel personRequestModel) {
         PersonViewModel createdPerson = this.personService.createPerson(personRequestModel);
         return ResponseEntity
-                .ok(createdPerson);
+                .status(HttpStatus.CREATED)
+                .body(createdPerson);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PersonViewModel> deletePerson(@PathVariable Long id){
+    public ResponseEntity<PersonViewModel> deletePerson(@PathVariable Long id) {
         PersonViewModel deletedPerson = this.personService.deletePerson(id);
         return ResponseEntity
                 .ok(deletedPerson);
@@ -52,7 +54,7 @@ public class PersonRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PersonViewModel> putPerson(@PathVariable Long id,
-                                                     @RequestBody PersonRequestModel personRequestModel){
+                                                     @RequestBody PersonRequestModel personRequestModel) {
         PersonViewModel putPerson = this.personService.putPerson(id, personRequestModel);
         return ResponseEntity
                 .ok(putPerson);
@@ -61,15 +63,15 @@ public class PersonRestController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<PersonViewModel> patchPerson(@PathVariable Long id,
-                                                               @RequestBody Map<String,String> fields){
+                                                       @RequestBody Map<String, String> fields) {
         PersonViewModel patchedPerson = this.personService.patchPerson(id, fields);
         return ResponseEntity
                 .ok(patchedPerson);
     }
 
     @ExceptionHandler({PersonNotFoundException.class,
-                       FiledDoesNotException.class})
-    public ResponseEntity<String> handlePersonNotFoundException(RuntimeException exception){
+            FiledDoesNotException.class})
+    public ResponseEntity<String> handleBadRequests(RuntimeException exception) {
         return ResponseEntity
                 .badRequest()
                 .body(exception.getMessage());
