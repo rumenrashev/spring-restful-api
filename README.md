@@ -1,4 +1,4 @@
-# spring-restful-api
+# Spring-restful-api
 
 ### Resource main url : /api/v1
 
@@ -114,4 +114,4 @@
   </tbody>
 </table>
 
-[here](#spring-restful-api)
+[here](#Spring-restful-api)
