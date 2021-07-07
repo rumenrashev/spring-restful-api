@@ -2,11 +2,11 @@
 
 ### Resource main url : /api/v1
 
-| HTTP method | Request path | Body |
-| ----------- | ------------ | ---- |
-| GET         | /people      | none |
-| GET         | /people/:id  | none | 
-| POST        | /people      | {"firstName":"{fistName}","lastName":"{lastName}","age":{age}|
+| HTTP method | Request path | Body | Status |
+| ----------- | ------------ | ---- | -------|
+| GET         | /people      | none | 200
+| GET         | /people/:id  | none | 200
+| POST        | /people      | {\"firstName":"{fistName}",\"lastName":"{lastName}",\"age":{age}|201
 | PUT         | /people/:id  |      |
 | PATCH       | /people/:id  |      |
 | DELETE      | /people/:id  | none |
