@@ -6,7 +6,7 @@
 | ----------- | ------------ | ---- | -------| -------------- |
 | GET         | /people      | none | 200 | JSON with List of all peple
 | GET         | /people/:id  | none | 200 | JSON with person
-| POST        | /people      | {\"firstName":"{fistName}",\"lastName":"{lastName}",\"age":{age}|201 | JSON with created person
+| POST        | /people      | {\\"firstName":"{fistName}",\"lastName":"{lastName}",\"age":{age}|201 | JSON with created person
 | PUT         | /people/:id  |      | JSON with edited person
 | PATCH       | /people/:id  |      | JSON with partially edited person
 | DELETE      | /people/:id  | none | JSON with deleted person
